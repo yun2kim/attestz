@@ -26,7 +26,7 @@ import (
 
 // Target contains connection parameters for reaching the DUT's gNSI service.
 type Target struct {
-	Host   string // Management IP or hostname of the switch chassis
+	Host string // Management IP or hostname of the switch chassis
 	Port string // Port of the gNSI service on the switch (default: "9339")
 }
 
@@ -45,7 +45,7 @@ func PrepareDUT() (*Target, error) {
 
 	// Replace with your switch's management IP or hostname.
 	return &Target{
-		Host:   "127.0.0.1",
+		Host: "127.0.0.1",
 		Port: "9339",
 	}, nil
 }
