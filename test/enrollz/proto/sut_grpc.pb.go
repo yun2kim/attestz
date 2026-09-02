@@ -45,9 +45,8 @@ const (
 // Controller defines the System Under Test (SUT) management interface for the
 // Enrollz integration test suite.
 //
-// In an Ondatra/Monax integration test, test cases invoke this Controller
-// service to drive the TPM 2.0 Enrollz workflow against a target Device Under
-// Test (DUT).
+// In a Monax integration test, test cases invoke this Controller service to
+// drive the TPM 2.0 Enrollz workflow against a target Device Under Test (DUT).
 type ControllerClient interface {
 	// Initiates the TPM 2.0 Enrollz workflow for a specific control card on the
 	// DUT.
@@ -79,9 +78,8 @@ func (c *controllerClient) EnrollDevice(ctx context.Context, in *EnrollDeviceReq
 // Controller defines the System Under Test (SUT) management interface for the
 // Enrollz integration test suite.
 //
-// In an Ondatra/Monax integration test, test cases invoke this Controller
-// service to drive the TPM 2.0 Enrollz workflow against a target Device Under
-// Test (DUT).
+// In a Monax integration test, test cases invoke this Controller service to
+// drive the TPM 2.0 Enrollz workflow against a target Device Under Test (DUT).
 type ControllerServer interface {
 	// Initiates the TPM 2.0 Enrollz workflow for a specific control card on the
 	// DUT.
