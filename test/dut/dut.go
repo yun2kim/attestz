@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Package dut is completely vendor-specific, and should be implemented by each vendor themselves.
+// Package dut is vendor-specific and should be implemented by each vendor.
 // Each vendor only needs to cover their own switch chassis they want to test, and does not need to consider compatibility with other vendors.
 package dut
 
@@ -21,12 +21,12 @@ import (
 )
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Please feel free to add any variables, data structures and helper functions in this file as needed to assist the functions below.
+// Add any variables, data structures and helper functions in this file as needed to assist the functions below.
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Target contains connection parameters for reaching the DUT's gNSI service.
 type Target struct {
-	IP   string // Management IP or hostname of the switch chassis
+	Host   string // Management IP or hostname of the switch chassis
 	Port string // Port of the gNSI service on the switch (default: "9339")
 }
 
@@ -34,7 +34,7 @@ type Target struct {
 //
 // Implementation Guidance:
 // Implement any logic here to prepare your switch chassis for Enrollz/Attestz testing.
-// You can either:
+// You can do one of the following:
 //   - Use your organization's private libraries/CLIs to ensure gNSI is active and TPM 2.0 is initialized.
 //   - Employ the Ondatra library (https://github.com/openconfig/ondatra) to interact with your switch chassis via a connected testbed.
 //   - Leave as a no-op if your testbed switch is pre-configured and perpetually listening on its gNSI port.
@@ -43,9 +43,9 @@ func PrepareDUT() (*Target, error) {
 	glog.Infof("Preparing the DUT for Enrollz TPM 2.0 testing")
 	glog.Infof("=============================================================================")
 
-	// Replace with your switch's management IP.
+	// Replace with your switch's management IP or hostname.
 	return &Target{
-		IP:   "127.0.0.1",
+		Host:   "127.0.0.1",
 		Port: "9339",
 	}, nil
 }
