@@ -38,24 +38,24 @@ type PKIProvider interface {
 	// IssueOIAK generates an Owner Initial Attestation Key (oIAK) certificate.
 	//
 	// Implementation Guidance:
-	// 1. Input: `iakPem` is the PEM-encoded IAK certificate from the DUT.
+	// 1. Input: `iakPEM` is the PEM-encoded IAK certificate from the DUT.
 	// 2. Extract the public key associated with the IAK.
 	// 3. Construct an X.509 certificate signed by the Owner CA with:
 	//    - Key Usage: `x509.KeyUsageDigitalSignature` (required for TPM quote signing).
 	// 4. Output: Return the PEM-encoded oIAK certificate string to be installed onto the DUT.
-	IssueOIAK(iakPem string) (string, error)
+	IssueOIAK(iakPEM string) (string, error)
 
 	// IssueOIDevID generates an Owner Initial Device Identifier (oIDevID) certificate.
 	//
 	// Implementation Guidance:
-	// 1. Input: `idevidPem` is the PEM-encoded IDevID certificate from the DUT.
+	// 1. Input: `idevidPEM` is the PEM-encoded IDevID certificate from the DUT.
 	// 2. Extract the public key from the IDevID certificate.
 	// 3. Construct an X.509 certificate signed by the Owner CA with:
 	//    - Key Usage: `x509.KeyUsageDigitalSignature | x509.KeyUsageKeyEncipherment`.
-	//    - Extended Key Usage: Must include both `x509.ExtKeyUsageClientAuth` and `x509.ExtKeyUsageServerAuth`
-	//      to enable mutual TLS authentication across management services (gNMI, gNOI, gNSI).
+	//    - Extended Key Usage: Must include `x509.ExtKeyUsageServerAuth` to allow the DUT to
+	//      authenticate itself when serving management services (gNMI, gNOI, gNSI) over mTLS.
 	// 4. Output: Return the PEM-encoded oIDevID certificate string to be installed onto the DUT.
-	IssueOIDevID(idevidPem string) (string, error)
+	IssueOIDevID(idevidPEM string) (string, error)
 
 	// GenerateClientCredentials produces an ephemeral or mTLS client certificate and private key pair
 	// for the SUT controller to authenticate itself when connecting to the DUT's enrollment service.
@@ -80,22 +80,22 @@ func (e *Engine) DeviceTrustBundle() *x509.CertPool {
 // IssueOIAK generates an Owner Initial Attestation Key (oIAK) certificate.
 //
 // Implementation Guidance:
-// 1. Decode the PEM-encoded IAK certificate (iakPem) received from the DUT.
+// 1. Decode the PEM-encoded IAK certificate (iakPEM) received from the DUT.
 // 2. Extract the public key associated with the IAK.
 // 3. Construct an X.509 certificate signed by the Owner CA with KeyUsage = x509.KeyUsageDigitalSignature.
 // 4. Return the PEM-encoded certificate string.
-func (e *Engine) IssueOIAK(iakPem string) (string, error) {
+func (e *Engine) IssueOIAK(iakPEM string) (string, error) {
 	return "", fmt.Errorf("IssueOIAK is not implemented: please implement custom PKI logic per the PKIProvider interface guidance")
 }
 
 // IssueOIDevID generates an Owner Initial Device Identifier (oIDevID) certificate.
 //
 // Implementation Guidance:
-// 1. Decode the PEM-encoded IDevID certificate (idevidPem) received from the DUT.
+// 1. Decode the PEM-encoded IDevID certificate (idevidPEM) received from the DUT.
 // 2. Extract the public key from the IDevID certificate.
-// 3. Construct an X.509 certificate signed by the Owner CA with ExtKeyUsage = [ClientAuth, ServerAuth].
+// 3. Construct an X.509 certificate signed by the Owner CA with ExtKeyUsage = [ServerAuth].
 // 4. Return the PEM-encoded certificate string.
-func (e *Engine) IssueOIDevID(idevidPem string) (string, error) {
+func (e *Engine) IssueOIDevID(idevidPEM string) (string, error) {
 	return "", fmt.Errorf("IssueOIDevID is not implemented: please implement custom PKI logic per the PKIProvider interface guidance")
 }
 
